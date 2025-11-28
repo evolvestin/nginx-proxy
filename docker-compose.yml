@@ -1,0 +1,17 @@
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'   # Incoming HTTP
+      - '443:443' # Incoming HTTPS
+      - '81:81'   # Admin interface
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - web-proxy-net  # Connect to the shared network
+
+networks:
+  web-proxy-net:
+    external: true
